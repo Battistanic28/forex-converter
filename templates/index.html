@@ -8,6 +8,13 @@
 </head>
 <body>
     <h1 class="text-center m-3">Forex Converter</h1>
+    <div class="error-div container-fluid col-6">
+        {% for msg in get_flashed_messages()%}
+        <div class="alert alert-warning">
+            <p>{{msg}}</p>
+            {% endfor %}
+        </div>
+    </div>
     <div class="inputs-div container-fluid col-6 card mb-3">
         <form action="/results" method="POST">
             <p>Converting from: <input class="form-control" type="text" name="from_currency" value="USD"></p>
