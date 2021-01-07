@@ -8,26 +8,27 @@
 </head>
 <body>
     <h1 class="text-center m-3">Forex Converter</h1>
-    <div class="error-div container-fluid col-6">
-        {% for msg in get_flashed_messages()%}
-        <div class="alert alert-warning">
-            <p>{{msg}}</p>
-            {% endfor %}
-        </div>
+
     </div>
-    <div class="inputs-div container-fluid col-6 card mb-3">
+    <div class="inputs-div container-fluid col-6 bg-light card mb-3">
         <form action="/results" method="POST">
-            <p>Converting from: <input class="form-control" type="text" name="from_currency" value="USD"></p>
-            <p>Converting to: <input class="form-control" type="text" name="to_currency" value="INR"></p>
-            <p>Amount: <input class="form-control" type="text" name="amount" value="100"></p>
+            <p>Converting from: <input class="form-control" type="text" name="from_currency"></p>
+            <p>Converting to: <input class="form-control" type="text" name="to_currency"></p>
+            <p>Amount: <input class="form-control" type="text" name="amount"></p>
             <input type="submit" class="btn btn-success mb-3" value="Convert">
         </form>
+        <div class="result-div">
+            {% block content %}
+            {% endblock %}
+        <div class="error-div">
+            {% for msg in get_flashed_messages()%}
+            <div class="alert alert-danger">
+                <p>{{msg}}</p>
+            </div>
+                {% endfor %}
+        </div>
     </div>
 
-    <div class="result-div container-fluid col-6 card">
-        {% block content %}
-        {% endblock %}
-    </div>
     
 </body>
 </html>
