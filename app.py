@@ -19,29 +19,25 @@ def convert():
     valid_from_cn = cc.get_currency_name(from_currency)
     valid_to_cn = cc.get_currency_name(to_currency)
     symbol = cc.get_symbol(to_currency)
-    amount = int(request.form["amount"])
+    try:
+        amount = float(request.form["amount"])
+    except:
+        amount = None 
 
     try:
         result = cr.convert(from_currency, to_currency, amount)
     except:
         if valid_from_cn == None:
             flash(f"Currency unavailable: {from_currency}")
-            return render_template("/index.html")
+            # return render_template("/index.html")
 
         if valid_to_cn == None:
             flash(f"Currency unavailable: {to_currency}")
-            return render_template("/index.html")
+            # return render_template("/index.html")
 
-        if type(amount) != int:
+        if amount == None:
             flash("Please enter valid amount.")
-            return render_template("/index.html")
+            # return render_template("/index.html")
 
-
+        return render_template("/index.html")
     return render_template("/results.html", symbol=symbol, result=round(result,2), from_currency=from_currency, to_currency=to_currency)
-
-# The object returned from CurrencyCodes() has a get_currency_name() method 
-# that attempts to map a code to a name. If that returns None, the code is invalid. 
-# The object returned from CurrencyRates() includes a convert() method that will throw 
-# an exception if the conversion is invalid. If you check the results of the 
-# get_currency_name() method and wrap the convert call in a try-except, you can determine 
-# if the data is invalid and if 1 or more error messages should be displayed via flash.
